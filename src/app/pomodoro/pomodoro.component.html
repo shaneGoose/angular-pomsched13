@@ -3,33 +3,24 @@
     <div class="col-lg-6">
       <div class="container">
         <h1 class="display-4">{{jClock | date:'shortTime'}}</h1>
+      </div>
     </div>
-    <input type="number" />
-  </div>
-  <table class="table table-sm table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">time</th>
-      <th scope="col">interval</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>7:00a</td>
-      <td>work</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>7:25a</td>
-      <td>break</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>7:30</td>
-      <td>work</td>
-    </tr>
-  </tbody>
-</table>
+    <table class="table table-sm table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">time</th>
+        <th scope="col">interval</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-row [ngForOf]="rows" [ngForTrackBy]="trackByFn">
+        <tr>
+          <th scope="row">{{row.id}}</th>
+          <td>{{row.time}}</td>
+          <td>{{row.interval}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
 </div>
