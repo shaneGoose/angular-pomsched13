@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MS_CONV } from '../CONSTANTS';
 
 @Component({
   selector: 'pom-sched',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PomodoroComponent implements OnInit {
   //Instance Variables
-  
+  jClock: Date;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.jClock = new Date(Date.now());
+  }
+
+  //Ticker function
+
 }

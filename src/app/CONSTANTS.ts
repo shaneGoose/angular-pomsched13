@@ -1,0 +1,1 @@
+export const MS_CONV = 60 * 1000;
