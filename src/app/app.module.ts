@@ -12,7 +12,8 @@ import { PomodoroComponent } from './pomodoro/pomodoro.component';
   declarations: [ 
     AppComponent, 
     TitleComponent,
-    PomodoroComponent ],
+    PomodoroComponent 
+    ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

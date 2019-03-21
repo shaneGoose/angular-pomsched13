@@ -17,6 +17,7 @@ export class PomodoroComponent implements OnInit {
   private longCounter: number = 0;
   private lunchCounter: number = 0;
   private fortyfiveCounter: number = 0;
+  private shiftCounter: number = 0;
 
   constructor() {}
 
@@ -45,7 +46,6 @@ export class PomodoroComponent implements OnInit {
 
     //Start building the table here
     let id = 1;
-    let shiftCounter = 0;
     let runTime = this.startTime
     let temp: pInterval = {id: id++, time: new Date(runTime), interval: 'work'};
     runTime = runTime + WORK;
@@ -71,6 +71,31 @@ export class PomodoroComponent implements OnInit {
       }
 
       //Backend mods, check the last entry and make mods for long break, lunch, and special cases
+      if (this.sumCounters() % length === 0 && this.longCounter === this.lunchCounter) {
+        temp = {id: id++, time: new Date(runTime), interval: 'long break'};
+        this.rows[this.rows.length - 1] = temp;
+        runTime = runTime + LONG;
+        accum = accum + LONG;
+        this.shortCounter--;
+        this.longCounter++;
+      }
+      else if (this.sumCounters() % length === 0 && this.lunchCounter < this.longCounter) {
+        temp = {id: id++, time: new Date(runTime), interval: 'lunch'};
+        this.rows[this.rows.length - 1] = temp;
+        runTime = runTime + LUNCH;
+        accum = accum + LUNCH;
+        this.shortCounter--;
+        this.lunchCounter++;
+      }
+
+      //Backend mods for double shifts (greater than 8 hours)
+
+      //append retire to the schedule
+      if (accum >= length * 60 * MIN_TO_MS) {
+        temp = {id: id++, time: new Date(runTime), interval: 'retire'};
+        this.rows.push(temp);
+        this.shiftCounter++;
+      }
 
     } while (accum < length * 60 * MIN_TO_MS)
   }

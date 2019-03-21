@@ -6,19 +6,20 @@
       </div>
     </div>
     <table class="table table-sm table-dark">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">time</th>
-        <th scope="col">interval</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of rows">
-          <th scope="row">{{row.id}}</th>
-          <td>{{row.time | date:'shortTime'}}</td>
-          <td>{{row.interval}}</td>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">time</th>
+          <th scope="col">interval</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows" id="{{row.id}}">
+            <th scope="row">{{row.id}}</th>
+            <td>{{row.time | date:'shortTime'}}</td>
+            <td>{{row.interval}}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
