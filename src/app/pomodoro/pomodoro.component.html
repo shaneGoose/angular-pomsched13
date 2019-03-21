@@ -14,13 +14,11 @@
       </tr>
     </thead>
     <tbody>
-      <ng-template ngFor let-row [ngForOf]="rows" [ngForTrackBy]="trackByFn">
-        <tr>
+      <tr *ngFor="let row of rows">
           <th scope="row">{{row.id}}</th>
-          <td>{{row.time}}</td>
+          <td>{{row.time | date:'shortTime'}}</td>
           <td>{{row.interval}}</td>
         </tr>
-      </ng-template>
     </tbody>
   </table>
 </div>
