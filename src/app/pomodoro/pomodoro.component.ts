@@ -47,7 +47,7 @@ export class PomodoroComponent implements OnInit {
   ngOnInit() {
     this.startTime = Date.now();
     this.jClock = new Date(this.startTime);
-    this.ticker = setInterval(this.tick, 500);
+    this.ticker = setInterval(this.tick, 150);
     this.makeSchedule(8);
   }
 
