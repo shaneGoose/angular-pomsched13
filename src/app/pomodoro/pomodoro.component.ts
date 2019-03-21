@@ -56,18 +56,18 @@ export class PomodoroComponent implements OnInit {
       //Enter with [1, 0, 0, 0, 0] state
       //Make base with alternate work and break then modify on the back end
       if ((this.sumCounters() % length) % 2 === 0) {
-        temp = {id: id++, time: new Date(runTime), interval: 'break'};
-        this.rows.push(temp);
-        runTime = runTime + SHORT;
-        accum = accum + SHORT;
-        this.shortCounter++;
-      }
-      else if ((this.sumCounters() % length) % 2 === 1) {
         temp = {id: id++, time: new Date(runTime), interval: 'work'};
         this.rows.push(temp);
         runTime = runTime + WORK;
         accum = accum + WORK;
         this.workCounter++;
+      }
+      else if ((this.sumCounters() % length) % 2 === 1) {
+        temp = {id: id++, time: new Date(runTime), interval: 'break'};
+        this.rows.push(temp);
+        runTime = runTime + SHORT;
+        accum = accum + SHORT;
+        this.shortCounter++;
       }
 
       //Backend mods, check the last entry and make mods for long break, lunch, and special cases
