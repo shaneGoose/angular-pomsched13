@@ -49,10 +49,6 @@ export class PomodoroComponent implements OnInit {
     this.jClock = new Date(this.startTime);
     this.ticker = setInterval(this.tick, 150);
     this.makeSchedule(8);
-  }
-
-  //Test function
-  testSet = () => {
     this.activeRow = 1;
   }
 
@@ -131,6 +127,17 @@ export class PomodoroComponent implements OnInit {
   //Ticker function
   tick = () => {
     this.jClock = new Date(Date.now());
+    if (1 === this.rows.length) {
+      this.ngOnInit();
+    }
+    else if (this.jClock.getTime() > this.rows[1].time.getTime()) {
+      /* Syntax for array destructuring
+      let a, rest;
+      [a, ...rest] = this.rows;
+      this.rows = rest;
+      */
+      this.rows = this.rows.slice(1);
+    }
   }
 
   //Helper functions
