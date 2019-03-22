@@ -128,7 +128,7 @@ export class PomodoroComponent implements OnInit {
   tick = () => {
     this.jClock = new Date(Date.now());
     if (1 === this.rows.length) {
-      this.ngOnInit();
+      this.ngOnInit();  //Upon end item, restart the pomodoro shift
     }
     else if (this.jClock.getTime() > this.rows[1].time.getTime()) {
       /* Syntax for array destructuring
