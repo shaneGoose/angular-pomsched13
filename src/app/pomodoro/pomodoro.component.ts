@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import {
   trigger,
   state,
@@ -10,7 +11,7 @@ import {
 @Component({
   selector: 'pom-sched',
   templateUrl: './pomodoro.component.html',
-  styleUrls: ['./pomodoro.component.css'],
+  styleUrls: ['./pomodoro.component.css']/*,
   animations: [
     trigger('flash', [
       state('high', style({
@@ -19,13 +20,13 @@ import {
       })),
       state('low', style({
         opacity: 0.15,
-        color: 'red'
+        backgroudColor: 'red'
       })),
       transition('high <=> low', [
         animate('1s')
       ])
     ])
-  ]
+  ]*/
 })
 export class PomodoroComponent implements OnInit {
   //Instance Variables
@@ -42,6 +43,8 @@ export class PomodoroComponent implements OnInit {
   private fortyfiveCounter: number = 0;
   private shiftCounter: number = 0;
 
+  form;
+
   constructor() { }
 
   ngOnInit() {
@@ -50,6 +53,23 @@ export class PomodoroComponent implements OnInit {
     this.ticker = setInterval(this.tick, 150);
     this.makeSchedule(8);
     this.activeRow = 1;
+
+    //Form building
+    this.form = new FormGroup({
+      userStartTime: new FormControl(Date.now()),
+      userShift: new FormControl(8)
+    })
+  }
+
+  //Form functions
+  resetShiftMaker = () => {
+    //alert("Shift reset was pressed!");
+    this.form.reset({userStartTime: Date.now(), userShift: 8});
+    //alert("userShift = " + this.form.userShift);
+  }
+
+  onSubmit = (shift) => {
+    console.log(shift);
   }
 
   ngOnDestroy() {
@@ -114,7 +134,7 @@ export class PomodoroComponent implements OnInit {
 
       //Backend mods for double shifts (greater than 8 hours)
 
-      //append retire to the schedule
+      //append 'retire' to the schedule
       if (accum >= length * 60 * MIN_TO_MS) {
         temp = { id: id++, time: new Date(runTime), interval: 'retire' };
         this.rows.push(temp);
