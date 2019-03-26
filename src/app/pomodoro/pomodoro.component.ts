@@ -106,6 +106,7 @@ export class PomodoroComponent implements OnInit {
     this.rows = [];
     this.jClock.setHours(inHours);
     this.jClock.setMinutes(inMins);
+    this.jClock.setSeconds(0);
     this.startTime = this.jClock.getTime();
     this.makeSchedule(shift.userShift);
   }
