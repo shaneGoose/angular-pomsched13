@@ -10,7 +10,17 @@
 					<div class="row">
 						<div class="form-group col">
 							<label for="userStartInput">Start Time</label>
-              <input type="time" class="form-control" id="uTimeInput" />
+                <div class="row">
+                  <select class="form-control col" formControlName="userHours" >
+                    <option *ngFor="let hour of hours">{{hour}}</option>
+                  </select> <h3>:</h3>
+                  <select class="form-control col" formControlName="userMinutes" >
+                    <option *ngFor="let min of mins">{{min}}</option>
+                  </select>
+                  <select class="form-control col" formControlName="userPeriod" >
+                    <option *ngFor="let x of periods">{{x}}</option>
+                  </select>
+                </div>
               <small id="startTimeHelp" class="form-text text-muted">Enter the shift start time.</small>
             </div>
           <div class="form-group col">

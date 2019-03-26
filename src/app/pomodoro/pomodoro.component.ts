@@ -43,7 +43,11 @@ export class PomodoroComponent implements OnInit {
   private fortyfiveCounter: number = 0;
   private shiftCounter: number = 0;
 
+  //Form stuff
   form;
+  private periods = ['', 'AM', 'PM'];
+  private hours = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  private mins = ['', '00', '15', '30', '45'];
 
   constructor() { }
 
@@ -56,7 +60,9 @@ export class PomodoroComponent implements OnInit {
 
     //Form building
     this.form = new FormGroup({
-      userStartTime: new FormControl(Date.now()),
+      userHours: new FormControl(''),
+      userMinutes: new FormControl(''),
+      userPeriod: new FormControl(''),
       userShift: new FormControl(8)
     })
   }
@@ -64,12 +70,44 @@ export class PomodoroComponent implements OnInit {
   //Form functions
   resetShiftMaker = () => {
     //alert("Shift reset was pressed!");
-    this.form.reset({userStartTime: Date.now(), userShift: 8});
+    this.form.reset({userShift: 8});
     //alert("userShift = " + this.form.userShift);
   }
 
   onSubmit = (shift) => {
     console.log(shift);
+    //Formatting for empty string
+    let inHours, inMins, inPeriod;
+    if (shift.userHours === '' || shift.userMinutes === '' || shift.userPeriod === ''){
+      inHours = 9;
+      inMins = 0;
+      inPeriod = this.periods[1];
+    }
+
+    if (inHours !== 9) {
+      inHours = parseInt(shift.userHours);
+    }
+
+    if (inMins !== 0) {
+      if (shift.userMinutes = this.mins[1]){
+        inMins = 0;
+      }
+      else {
+        inMins = parseInt(shift.userMinutes);
+      }
+    }
+
+    if (inPeriod !== this.periods[1]){
+      if (shift.userPeriod === 'PM'){
+        inHours = inHours + 12;
+      }
+    }
+
+    this.rows = [];
+    this.jClock.setHours(inHours);
+    this.jClock.setMinutes(inMins);
+    this.startTime = this.jClock.getTime();
+    this.makeSchedule(shift.userShift);
   }
 
   ngOnDestroy() {
