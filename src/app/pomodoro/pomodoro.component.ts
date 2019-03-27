@@ -184,7 +184,7 @@ export class PomodoroComponent implements OnInit {
         this.shiftCounter++;
       }
 
-    } while (accum < length * 60 * MIN_TO_MS)
+    } while (accum < length * 60 * MIN_TO_MS /*+ LUNCH*/) //Factor that I may or may not want to include
 
     this.zeroCounters();
     this.isSliceable = true;
