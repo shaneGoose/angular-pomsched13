@@ -48,6 +48,7 @@ export class PomodoroComponent implements OnInit {
   private periods = ['', 'AM', 'PM'];
   private hours = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   private mins = ['', '00', '15', '30', '45'];
+  private isSliceable: boolean = false;
 
   constructor() { }
 
@@ -70,7 +71,7 @@ export class PomodoroComponent implements OnInit {
   //Form functions
   resetShiftMaker = () => {
     //alert("Shift reset was pressed!");
-    this.form.reset({userShift: 8});
+    this.form.reset({userHours: '', userMinutes: '', userPeriod: '', userShift: 8});
     //alert("userShift = " + this.form.userShift);
   }
 
@@ -89,7 +90,7 @@ export class PomodoroComponent implements OnInit {
     }
 
     if (inMins !== 0) {
-      if (shift.userMinutes = this.mins[1]){
+      if (shift.userMinutes === this.mins[1]){
         inMins = 0;
       }
       else {
@@ -109,6 +110,7 @@ export class PomodoroComponent implements OnInit {
     this.jClock.setSeconds(0);
     this.startTime = this.jClock.getTime();
     this.makeSchedule(shift.userShift);
+    this.form.reset({userHours: '', userMinutes: '', userPeriod: '', userShift: 8});
   }
 
   ngOnDestroy() {
@@ -124,6 +126,8 @@ export class PomodoroComponent implements OnInit {
     let accum = 0;
     let id = 1;
     */
+
+    this.isSliceable = false;
 
     //Test field    
 
@@ -181,6 +185,9 @@ export class PomodoroComponent implements OnInit {
       }
 
     } while (accum < length * 60 * MIN_TO_MS)
+
+    this.zeroCounters();
+    this.isSliceable = true;
   }
 
   //Ticker function
@@ -195,13 +202,23 @@ export class PomodoroComponent implements OnInit {
       [a, ...rest] = this.rows;
       this.rows = rest;
       */
-      this.rows = this.rows.slice(1);
+      if (this.isSliceable) {
+        this.rows = this.rows.slice(1);
+      }
     }
   }
 
   //Helper functions
   sumCounters = (): number => {
     return this.longCounter + this.shortCounter + this.workCounter + this.lunchCounter + this.fortyfiveCounter;
+  }
+
+  zeroCounters = () => {
+    this.longCounter = 0;
+    this.shortCounter = 0;
+    this.workCounter = 0;
+    this.lunchCounter = 0;
+    this.fortyfiveCounter = 0;
   }
 }
 
