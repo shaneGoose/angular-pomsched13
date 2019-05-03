@@ -132,9 +132,9 @@ export class PomodoroComponent implements OnInit {
     //Test field    
 
     //Start building the table here
-    let id = 1;
+    let id = 0;
     let runTime = this.startTime
-    let temp: pInterval = { id: id++, time: new Date(runTime), interval: 'work' };
+    let temp: pInterval = { id: ++id, time: new Date(runTime), interval: 'work' };
     runTime = runTime + WORK;
     this.workCounter++;
     let accum = WORK;
@@ -143,14 +143,14 @@ export class PomodoroComponent implements OnInit {
       //Enter with [1, 0, 0, 0, 0] state
       //Make base with alternate work and break then modify on the back end
       if ((this.sumCounters() % length) % 2 === 0) {
-        temp = { id: id++, time: new Date(runTime), interval: 'work' };
+        temp = { id: ++id, time: new Date(runTime), interval: 'work' };
         this.rows.push(temp);
         runTime = runTime + WORK;
         accum = accum + WORK;
         this.workCounter++;
       }
       else if ((this.sumCounters() % length) % 2 === 1) {
-        temp = { id: id++, time: new Date(runTime), interval: 'break' };
+        temp = { id: ++id, time: new Date(runTime), interval: 'break' };
         this.rows.push(temp);
         runTime = runTime + SHORT;
         accum = accum + SHORT;
@@ -159,7 +159,7 @@ export class PomodoroComponent implements OnInit {
 
       //Backend mods, check the last entry and make mods for long break, lunch, and special cases
       if (this.sumCounters() % length === 0 && this.longCounter === this.lunchCounter) {
-        temp = { id: id++, time: new Date(runTime), interval: 'long break' };
+        temp = { id: id, time: new Date(runTime), interval: 'long break' };
         this.rows[this.rows.length - 1] = temp;
         runTime = runTime + LONG;
         accum = accum + LONG;
@@ -167,7 +167,7 @@ export class PomodoroComponent implements OnInit {
         this.longCounter++;
       }
       else if (this.sumCounters() % length === 0 && this.lunchCounter < this.longCounter) {
-        temp = { id: id++, time: new Date(runTime), interval: 'lunch' };
+        temp = { id: id, time: new Date(runTime), interval: 'lunch' };
         this.rows[this.rows.length - 1] = temp;
         runTime = runTime + LUNCH;
         accum = accum + LUNCH;
@@ -179,7 +179,7 @@ export class PomodoroComponent implements OnInit {
 
       //append 'retire' to the schedule
       if (accum >= length * 60 * MIN_TO_MS) {
-        temp = { id: id++, time: new Date(runTime), interval: 'retire' };
+        temp = { id: ++id, time: new Date(runTime), interval: 'retire' };
         this.rows.push(temp);
         this.shiftCounter++;
       }
